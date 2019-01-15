@@ -9,7 +9,14 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+let wallMask:UInt32 = 0x1 << 0 // 1
+let ballMask:UInt32 = 0x1 << 1 // 2
+let pegMask:UInt32 = 0x1 << 2 // 4
+let squareMask:UInt32 = 0x1 << 3 // 8
+
+
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     var cannon:SKSpriteNode!
     var touchLocation:CGPoint = CGPoint.zero
 
@@ -36,10 +43,12 @@ class GameScene: SKScene {
         ball.zPosition = 0
         ball.position = cannon.position
         let angleInRadians = Float(cannon.zRotation)
-        let speeed = CGFloat(75.0)
-        let vx:CGFloat = CGFloat(cosf(angleInRadians)) * speed
-        let vy:CGFloat = CGFloat(sinf(angleInRadians)) * speed
-        ball.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 250))
+        _ = CGFloat(75.0)
+        let _:CGFloat = CGFloat(cosf(angleInRadians)) * speed
+        let _:CGFloat = CGFloat(sinf(angleInRadians)) * speed
+        ball.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
+        ball.physicsBody?.collisionBitMask = wallMask | ballMask | pegMask 
+        
         
         
     }
